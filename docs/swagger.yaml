@@ -1,0 +1,64 @@
+basePath: /
+definitions:
+  interfaces.PaginatedSongsResponse:
+    properties:
+      page:
+        type: integer
+      page_size:
+        type: integer
+      songs:
+        items:
+          $ref: '#/definitions/interfaces.SongResponse'
+        type: array
+      total_count:
+        type: integer
+    type: object
+  interfaces.SongResponse:
+    properties:
+      group:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      release_date:
+        type: string
+      text:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API для управления библиотекой песен.
+  title: Music Library API
+  version: "1.0"
+paths:
+  /songs:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of songs with pagination
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of songs per page
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/interfaces.PaginatedSongsResponse'
+      summary: Get all songs
+      tags:
+      - songs
+swagger: "2.0"
